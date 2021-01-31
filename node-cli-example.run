@@ -1,0 +1,45 @@
+#!/usr/bin/env node
+
+const readline = require("readline");
+
+// instantiate a readline
+const cli = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout,
+    prompt: "\n> ",
+});
+
+// prompts the user and waits for input
+cli.prompt();
+
+// listen for user input
+cli.on("line", (line) => {
+    const input = line.trim();
+
+    switch (input) {
+        case "env": {
+            for (const variable in process.env) {
+                console.log(`${variable}: ${process.env[variable]}`);
+            }
+
+            break;
+        }
+        case "quit": {
+            console.log("Bye!");
+
+            process.exit(0);
+        }
+        case "help":
+        default: {
+            console.log(
+                "\nCommands available\n\
+--------------------------------------\n\n\
+env      display environment variables\n\n\
+quit     quit the CLI\
+"
+            );
+        }
+    }
+
+    cli.prompt();
+});
